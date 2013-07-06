@@ -1,31 +1,31 @@
-/**********************************************************************\
-  This script creates a preview of the current page as it would look on 
-  a screen that is 1024 pixels wide. Here is how it works:
+/* ========================================================================== *\
+    This script creates a preview of the current page as it would look on
+    a screen that is 1024 pixels wide. Here is how it works:
 
-  1. Create a "faux screen" container that is 1024 pixels wide.
-  2. Transfer the original <html> and <body> styles to the faux screen.
-  3. Copy the <body> innerHTML into the faux screen container.
-  4. Delete the old <body> innerHTML.
-  5. Append our faux screen container to the empty <body> element.
+    1. Create a "faux screen" container that is 1024 pixels wide.
+    2. Transfer the original <html> and <body> styles to the faux screen.
+    3. Copy the <body> innerHTML into the faux screen container.
+    4. Delete the old <body> innerHTML.
+    5. Append our faux screen container to the empty <body> element.
 
-  Here is a simplified abstraction of the concept:
+    Here is a simplified abstraction of the concept:
 
-  Before:
+    Before:
 
-      <body style="ABC">                   <!-- body.width = 1920px -->
-          <p>Hello World!</p>              <!--    p.width = 1920px -->
-      </body>
+        <body style="ABC">                   <!-- body.width = 1920px -->
+            <p>Hello World!</p>              <!--    p.width = 1920px -->
+        </body>
 
 
-  After:
+    After:
 
-      <body>                               <!-- body.width = 1920px -->
-          <div style="width:1024px; ABC">  <!--  div.width = 1024px -->
-              <p>Hello World!</p>          <!--    p.width = 1024px -->
-          </div>
-      </body>
+        <body>                               <!-- body.width = 1920px -->
+            <div style="width:1024px; ABC">  <!--  div.width = 1024px -->
+                <p>Hello World!</p>          <!--    p.width = 1024px -->
+            </div>
+        </body>
 
-\**********************************************************************/
+\* ========================================================================== */
 
 (function() {
 
@@ -47,6 +47,12 @@ var htmlBg  = window.getComputedStyle(html).getPropertyCSSValue('background').cs
 var bodyBg  = window.getComputedStyle(body).getPropertyCSSValue('background').cssText;
 var bodyMar = window.getComputedStyle(body).getPropertyCSSValue('margin').cssText;
 var bodyPad = window.getComputedStyle(body).getPropertyCSSValue('padding').cssText;
+var bgColor = window.getComputedStyle(html).getPropertyCSSValue('background-color').cssText;
+
+// If the original background color on the <html> element is the default (transparent), make the fauxHTML background white instead.
+if (bgColor == 'rgba(0, 0, 0, 0)') {
+    bgColor = 'rgba(255, 255, 255, 1)';
+}
 
 // Create monitor and "faux" <html> and <body> elements.
 var monitor  = document.createElement('div');
@@ -77,6 +83,7 @@ fauxHTML.style.overflowY       = 'auto';
 fauxHTML.style.position        = 'relative';
 fauxHTML.style.top             = '32px';
 fauxHTML.style.background      = htmlBg;
+fauxHTML.style.backgroundColor = bgColor;
 fauxHTML.style.borderRadius    = deviceInner + 'px';
 fauxHTML.style.border          = deviceInner + 'px #333 solid';
 
@@ -132,12 +139,12 @@ body.style.background = 'rgba(204, 204, 204, 1) none repeat scroll 0% 0%';
 var fixedElements = document.getElementsByTagName('*');
 var fauxFixedElement;
 for (i = 0, max = fixedElements.length; i < max; i++) {
-	if ((window.getComputedStyle(fixedElements[i]).getPropertyCSSValue('position').cssText == 'fixed') && (fixedElements[i].id != 'fauxFixed')) {
-		fauxFixedElement = fixedElements[i].cloneNode(true);
-		fauxFixedElement.style.position = 'absolute';
-		fixedElements[i].parentNode.removeChild(fixedElements[i]);
-		fauxFix.appendChild(fauxFixedElement);
-	}
+    if ((window.getComputedStyle(fixedElements[i]).getPropertyCSSValue('position').cssText == 'fixed') && (fixedElements[i].id != 'fauxFixed')) {
+        fauxFixedElement = fixedElements[i].cloneNode(true);
+        fauxFixedElement.style.position = 'absolute';
+        fixedElements[i].parentNode.removeChild(fixedElements[i]);
+        fauxFix.appendChild(fauxFixedElement);
+    }
 }
 
 fauxFix.style.width = fauxBody.offsetWidth + 'px';
