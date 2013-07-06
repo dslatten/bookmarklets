@@ -113,6 +113,8 @@ body.innerHTML = '';
 // ...and replace it with the copy that we wrapped with our faux <html> and <body>.
 body.appendChild(monitor);
 
+html.style.width      = '100%';
+html.style.height     = '100%';
 html.style.margin     = '0 0 0 0';
 html.style.padding    = '0 0 0 0';
 html.style.position   = 'relative';
