@@ -13,9 +13,10 @@
     var domain = 0;
 
     while (position != -1) {
-        if (-1 != (position = host.indexOf('.', position + 1))) {
+        if (host.indexOf('.', position + 1) != -1) {
             domain = position + 1;
         }
+        position = host.indexOf('.', position + 1);
     }
     domain = host.substring(domain);
 
