@@ -1,6 +1,6 @@
 javascript:(function() {
 
-    document.write('<!DOCTYPE html><html><head><title>Certificate</title></head><body style="margin:0;background:url(\'https://analyticsacademy.withgoogle.com/assets/img/cert_template.png\') no-repeat"><canvas id="certificate" width="960" height="720"></canvas></body></html>');
+    document.write('<!DOCTYPE html><html><head><title>Certificate</title></head><body style="margin:0;background:url(\'http://darrenslatten.com/bookmarklets/ga-cert/images/cert_template.png\') no-repeat"><canvas id="certificate" width="960" height="720"></canvas></body></html>');
     var u = prompt('Enter a name', 'SEO Mofo');
 
     create_canvas();
