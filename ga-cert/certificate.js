@@ -15,7 +15,7 @@ javascript:(function() {
             templateLoaded = true;
             imageLoaded();
         };
-        template.src = 'https://analyticsacademy.withgoogle.com/assets/img/cert_template.png';
+        template.src = 'http://darrenslatten.com/bookmarklets/ga-cert/images/cert_template.png';
 
         function imageLoaded() {
             if (!templateLoaded || !qrLoaded) {
